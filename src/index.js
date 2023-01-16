@@ -21,7 +21,7 @@ refs.loadMore.addEventListener('click', onLoadMore);
 async function onSubmit(e) {
   e.preventDefault();
   refs.gallery.innerHTML = '';
-  console.log(page);
+
   const searchQuery = e.target.elements.searchQuery.value;
   if (!searchQuery) {
     return;
@@ -32,7 +32,7 @@ async function onSubmit(e) {
   query = searchQuery;
   const images = await getImages(searchQuery, page);
   if (images.totalHits) {
-    Notify.success(`Hooray! We found ${totalHits} images.`);
+    Notify.success(`Hooray! We found ${images.totalHits} images.`);
   }
   renderImages(images.hits);
 }
@@ -45,7 +45,6 @@ async function getImages(q, pageNumber) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
-    return;
   }
   if (totalPages > 1) {
     refs.loadMore.classList.remove('is-hidden');

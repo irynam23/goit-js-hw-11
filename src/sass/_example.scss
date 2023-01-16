@@ -48,7 +48,7 @@ body {
 }
 
 .search-btn:hover,
-.search-btn:focus {
+.search-btn:active {
   background-color: #aaaaaa;
 }
 
@@ -62,7 +62,6 @@ body {
   border: none;
   text-transform: uppercase;
   cursor: pointer;
-  // margin-left: 10px;
   transition: background-color 250ms linear;
 }
 
@@ -71,7 +70,7 @@ body {
 }
 
 .load-more:hover,
-.load-more:focus {
+.load-more:active {
   background-color: rgb(18, 67, 213);
 }
 
@@ -98,19 +97,23 @@ body {
   overflow: hidden;
 }
 .photo-card img {
-  display: block;
   width: 100%;
-  margin: 0 auto;
+  height: 100%;
+  max-width: unset;
+  object-fit: cover;
 }
 
 .info {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   font-size: 12px;
-  gap: 10px;
 }
 
 .info-item {
   text-align: center;
+
+  & b {
+    display: block;
+  }
 }
