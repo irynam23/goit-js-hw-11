@@ -7,6 +7,7 @@ const refs = {
   form: document.querySelector('.search-form'),
   gallery: document.querySelector('.gallery'),
   loadMore: document.querySelector('.load-more'),
+  searchBtn: document.querySelector('.search-btn'),
 };
 
 const APIKEY = '32876010-953e9d7ee50a911a8b34edefd';
@@ -20,21 +21,26 @@ refs.loadMore.addEventListener('click', onLoadMore);
 
 async function onSubmit(e) {
   e.preventDefault();
+  refs.searchBtn.disabled = true;
   refs.gallery.innerHTML = '';
+  refs.loadMore.classList.add('is-hidden');
+  page = 1;
 
   const searchQuery = e.target.elements.searchQuery.value;
   if (!searchQuery) {
     return;
   }
-  if (query && query !== searchQuery) {
-    page = 1;
-  }
   query = searchQuery;
-  const images = await getImages(searchQuery, page);
-  if (images.totalHits) {
-    Notify.success(`Hooray! We found ${images.totalHits} images.`);
+  try {
+    const images = await getImages(searchQuery, page);
+    if (images.totalHits) {
+      Notify.success(`Hooray! We found ${images.totalHits} images.`);
+    }
+    renderImages(images.hits);
+  } catch (error) {
+    console.log(error);
   }
-  renderImages(images.hits);
+  refs.searchBtn.disabled = false;
 }
 async function getImages(q, pageNumber) {
   const response = await axios.get(
@@ -93,7 +99,13 @@ function renderImages(imagesArray) {
 }
 
 async function onLoadMore() {
+  refs.loadMore.disabled = true;
   page += 1;
-  const images = await getImages(query, page);
-  renderImages(images.hits);
+  try {
+    const images = await getImages(query, page);
+    renderImages(images.hits);
+  } catch (error) {
+    console.log(error);
+  }
+  refs.loadMore.disabled = false;
 }

@@ -45,6 +45,10 @@ body {
   right: 0;
   cursor: pointer;
   transform: translateY(-50%);
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .search-btn:hover,
@@ -63,6 +67,10 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   transition: background-color 250ms linear;
+
+  &:disabled {
+    opacity: 0.5;
+  }
 }
 
 .load-more.is-hidden {
